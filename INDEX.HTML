@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WOLVES - חוויה מודרנית</title>
+    <link rel="icon" type="image/png" href="favicon.webp" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <!-- EmailJS SDK for sending emails -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+      (function () {
+        // Change YOUR_EMAILJS_USER_ID to your real EmailJS User ID.
+        emailjs.init("YOUR_EMAILJS_USER_ID");
+      })();
+    </script>
+    <style>
+      /* Global Styles */
+      body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #e0eafc, #cfdef3);
+        color: #333;
+      }
+      /* Header */
+      header {
+        background: linear-gradient(90deg, #283593, #5c6bc0);
+        color: #fff;
+        padding: 1.5rem 1rem 2rem 1rem;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      }
+      #login-info {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      /* Top Controls for Language */
+      .top-controls {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .top-controls select {
+        padding: 0.5rem;
+        border: none;
+        border-radius: 5px;
+      }
+      /* The header "welcome" section */
+      .welcome-section {
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 12px;
+        padding: 1.5rem 2rem;
+        display: inline-block;
+        margin-bottom: 1rem;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
+        transition: transform 0.3s ease;
+      }
+      .welcome-section:hover {
+        transform: scale(1.03);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 2rem;
+        letter-spacing: 1px;
+      }
+      header p.subtitle {
+        margin: 0.5rem 0 0;
+        font-size: 1.2rem;
+      }
+      /* Navigation */
+      nav {
+        margin-top: 1rem;
+      }
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        margin: 0 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        display: inline-flex;
+        align-items: center;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+      nav a i {
+        margin-right: 0.5rem;
+      }
+      nav a:hover {
+        background-color: rgba(255,255,255,0.3);
+        transform: scale(1.1);
+      }
+      header .currency-select {
+        margin-top: 1rem;
+      }
+      select.currency {
+        padding: 0.5rem;
+        border: none;
+        border-radius: 5px;
+      }
+      /* Main Content */
+      main {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        text-align: center;
+      }
+      h2.section-title {
+        font-size: 2rem;
+        color: #283593;
+        margin-bottom: 1.5rem;
+      }
+      /* Products (Home Page) */
+      .products {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+      }
+      .product {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 1rem;
+        width: 260px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        position: relative;
+      }
+      .product:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+      }
+      .product img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+      }
+      .product img:hover {
+        transform: scale(1.05);
+      }
+      .product h3 {
+        margin: 0.5rem 0;
+        color: #444;
+      }
+      .price {
+        font-weight: bold;
+        margin: 0.5rem 0;
+        color: #ff7043;
+      }
+      .product button {
+        background: linear-gradient(90deg, #ff7043, #ff8a65);
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s;
+        display: inline-flex;
+        align-items: center;
+        font-weight: bold;
+      }
+      .product button i {
+        margin-right: 0.5rem;
+      }
+      .product button:hover {
+        background: linear-gradient(90deg, #ff8a65, #ff7043);
+        transform: scale(1.05);
+      }
+      /* Styled Card Layout for Cart, Login, History Pages */
+      .card {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        max-width: 600px;
+        margin: 2rem auto;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        animation: fadeIn 0.8s ease-in-out;
+        text-align: left;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .card h2 {
+        margin-bottom: 1rem;
+        color: #283593;
+      }
+      /* Cart Page Specifics */
+      .cart-container ul {
+        list-style: none;
+        padding: 0;
+      }
+      .cart-container li {
+        border-bottom: 1px solid #ddd;
+        padding: 0.75rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .cart-container li button {
+        background: #e53935;
+        color: #fff;
+        border: none;
+        padding: 0.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+      }
+      .cart-container li button i {
+        margin-left: 0.5rem;
+      }
+      .cart-container li button:hover {
+        background-color: #c62828;
+      }
+      #total-price {
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 1rem;
+        color: #333;
+      }
+      .discount {
+        font-size: 1rem;
+        color: #2e7d32;
+        text-align: center;
+        margin-top: 0.5rem;
+      }
+      .payment {
+        text-align: center;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 2px solid #eee;
+      }
+      .payment input {
+        padding: 0.5rem;
+        width: 70%;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        transition: border 0.3s;
+      }
+      .payment input:focus {
+        border-color: #ff7043;
+        outline: none;
+      }
+      .payment button {
+        background: #2e7d32;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s;
+        display: inline-flex;
+        align-items: center;
+        font-weight: bold;
+      }
+      .payment button i {
+        margin-left: 0.5rem;
+      }
+      .payment button:hover {
+        background: #1b5e20;
+        transform: scale(1.05);
+      }
+      .coupon-area input {
+        padding: 0.5rem;
+        width: 50%;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 0.5rem;
+        transition: background 0.3s ease;
+      }
+      .coupon-area input:focus {
+        background: #f1f8e9;
+        outline: none;
+        border-color: #ff8a65;
+      }
+      /* Login Page */
+      .login-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .login-container input {
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+      .login-container button {
+        padding: 0.8rem;
+        border: none;
+        border-radius: 5px;
+        background: #3949ab;
+        color: #fff;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.3s ease;
+      }
+      .login-container button:hover {
+        background: #303f9f;
+      }
+      /* Footer */
+      footer {
+        background: #333;
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 2rem;
+        position: relative;
+      }
+      footer p {
+        margin: 0;
+      }
+      .social-icons {
+        margin-top: 1rem;
+      }
+      .social-icons i {
+        color: #fff;
+        margin: 0 0.5rem;
+        cursor: pointer;
+        transition: color 0.3s ease, transform 0.3s;
+      }
+      .social-icons i:hover {
+        color: #ff8a65;
+        transform: scale(1.2);
+      }
+      /* Popup Styles */
+      .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1100;
+      }
+      .popup-content {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        max-width: 400px;
+      }
+      .popup-content h3 {
+        margin-bottom: 1rem;
+      }
+      .popup-content button {
+        margin: 0 0.5rem;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .popup-content .confirm {
+        background: #2e7d32;
+        color: #fff;
+      }
+      .popup-content .cancel {
+        background: #757575;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="top-controls">
+        <select id="language-selector">
+          <option value="he">עברית</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div class="welcome-section">
+        <h1 id="header-welcome">ברוכים הבאים ל-WOLVES</h1>
+        <p class="subtitle" id="header-sub">חוויה עכשווית של קניות און-ליין</p>
+      </div>
+      <!-- Navigation -->
+      <nav>
+        <a id="nav-home" onclick="showSection('products-section')" type="button">
+          <i class="fas fa-home"></i> דף הבית
+        </a>
+        <a id="nav-cart" onclick="showSection('cart-section')" type="button">
+          <i class="fas fa-shopping-cart"></i> סל קניות
+        </a>
+        <a id="nav-login" onclick="showSection('login-section')" type="button">
+          <i class="fas fa-user"></i> התחברות
+        </a>
+      </nav>
+      <div class="currency-select">
+        <label for="currency">בחר מטבע:</label>
+        <select id="currency" class="currency" onchange="updatePrices()">
+          <option value="USD">דולר ($)</option>
+          <option value="EUR">אירו (€)</option>
+          <option value="ILS">שקל (₪)</option>
+        </select>
+      </div>
+      <div id="login-info"></div>
+    </header>
+    <main>
+      <!-- Products Section (Home Page) -->
+      <section id="products-section">
+        <h2 class="section-title" id="products-title">המוצרים שלנו</h2>
+        <div class="products">
+          <div class="product">
+            <img src="1.webp" alt="חולצת Wolves" />
+            <h3 id="product1-name">חולצת Wolves</h3>
+            <p class="price" data-price="10">$10</p>
+            <label for="size" id="size-label-1">בחר מידה:</label>
+            <select name="size">
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+            </select>
+            <button onclick="addToCart(document.getElementById('product1-name').textContent, 10)" type="button">
+              הוסף לעגלה <i class="fas fa-cart-plus"></i>
+            </button>
+          </div>
+          <div class="product">
+            <img src="3.webp" alt="מכנסיים שחורים" />
+            <h3 id="product2-name">מכנסיים שחורים</h3>
+            <p class="price" data-price="14">$14</p>
+            <label for="size" id="size-label-2">בחר מידה:</label>
+            <select name="size">
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+            </select>
+            <button onclick="addToCart(document.getElementById('product2-name').textContent, 14)" type="button">
+              הוסף לעגלה <i class="fas fa-cart-plus"></i>
+            </button>
+          </div>
+          <div class="product">
+            <img src="2.webp" alt="מעיל" />
+            <h3 id="product3-name">מעיל</h3>
+            <p class="price" data-price="25">$25</p>
+            <label for="size" id="size-label-3">בחר מידה:</label>
+            <select name="size">
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+            </select>
+            <button onclick="addToCart(document.getElementById('product3-name').textContent, 25)" type="button">
+              הוסף לעגלה <i class="fas fa-cart-plus"></i>
+            </button>
+          </div>
+          <div class="product">
+            <img src="4.webp" alt="סווצ'ר" />
+            <h3 id="product4-name">סווצ'ר</h3>
+            <p class="price" data-price="15">$15</p>
+            <label for="size" id="size-label-4">בחר מידה:</label>
+            <select name="size">
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+            </select>
+            <button onclick="addToCart(document.getElementById('product4-name').textContent, 15)" type="button">
+              הוסף לעגלה <i class="fas fa-cart-plus"></i>
+            </button>
+          </div>
+          <div class="product">
+            <img src="5.webp" alt="כובע" />
+            <h3 id="product5-name">כובע</h3>
+            <p class="price" data-price="7">$7</p>
+            <label for="size" id="size-label-5">בחר מידה:</label>
+            <select name="size">
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+            </select>
+            <button onclick="addToCart(document.getElementById('product5-name').textContent, 7)" type="button">
+              הוסף לעגלה <i class="fas fa-cart-plus"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+      <!-- Cart Section -->
+      <section id="cart-section" style="display: none">
+        <div class="cart-container card">
+          <h2 id="cart-title">סל הקניות שלך</h2>
+          <ul id="cart-list"></ul>
+          <p id="total-price">סה"כ: $0</p>
+          <p id="discount-text" class="discount"></p>
+          <div class="payment">
+            <input type="text" id="card-number" placeholder="הכנס מספר כרטיס אשראי" />
+            <button onclick="checkout()" type="button" id="checkout-button">
+              בצע תשלום <i class="fas fa-credit-card"></i>
+            </button>
+            <div class="coupon-area">
+              <input type="text" id="coupon-code" placeholder="הכנס קוד קופון" />
+              <button onclick="applyCoupon()" type="button" id="coupon-button">
+                החל קופון
+              </button>
+            </div>
+          </div>
+          <button id="history-button" onclick="showSection('history-section'); updateHistoryPage();">
+            היסטוריות רכישות
+          </button>
+        </div>
+      </section>
+      <!-- Login Section -->
+      <section id="login-section" style="display: none">
+        <div class="login-container card">
+          <h2 id="login-title">התחברות למערכת</h2>
+          <form onsubmit="loginUser(event)">
+            <input type="email" id="login-email" placeholder="הכנס אימייל" required />
+            <input type="password" id="login-password" placeholder="הכנס סיסמה" required />
+            <button type="submit" id="login-button">התחבר</button>
+          </form>
+          <div id="login-error" style="color: red; margin-top: 1rem"></div>
+        </div>
+      </section>
+      <!-- Purchase History Section -->
+      <section id="history-section" style="display: none">
+        <div class="card">
+          <h2 id="history-title">היסטוריות רכישות</h2>
+          <div id="history-content"></div>
+          <button onclick="showSection('products-section')" id="history-back-button">חזור לחנות</button>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2025 חנות מקוונת. כל הזכויות שמורות.</p>
+      <div class="social-icons">
+        <i class="fab fa-facebook-f"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-instagram"></i>
+      </div>
+    </footer>
+    <!-- Popup for confirming add to cart -->
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <h3 id="popup-add-msg">
+          האם אתה בטוח שברצונך להוסיף את <span id="popup-item"></span> לעגלה?
+        </h3>
+        <button id="confirm-add" class="confirm" type="button">
+          הוסף לעגלה
+        </button>
+        <button id="cancel-add" class="cancel" type="button">
+          אל תוסיף
+        </button>
+      </div>
+    </div>
+    <!-- Popup for checkout confirmation -->
+    <div id="checkout-popup" class="popup">
+      <div class="popup-content">
+        <h3 id="checkout-popup-title">אתה בטוח שאתה רוצה לקנות?</h3>
+        <button id="cancel-checkout" class="cancel" type="button">
+          אל תקנה
+        </button>
+        <button id="confirm-checkout" class="confirm" type="button">
+          בטוח תקנה
+        </button>
+      </div>
+    </div>
+    <!-- Popup for logout confirmation -->
+    <div id="logout-popup" class="popup">
+      <div class="popup-content">
+        <h3 id="logout-popup-title">אתה בטוח שאתה רוצה להתנתק?</h3>
+        <button id="confirm-logout" class="confirm" type="button">אני בטוח</button>
+        <button id="cancel-logout" class="cancel" type="button">אני רוצה להשאר מחובר</button>
+      </div>
+    </div>
+    <script>
+      // Translation dictionary for Hebrew and English texts.
+      // Added keys for logoutTranslations and logoutButton translation.
+      const translations = {
+        he: {
+          headerWelcome: "ברוכים הבאים ל-WOLVES",
+          headerSub: "חוויה עכשווית של קניות און-ליין",
+          navHome: "דף הבית",
+          navCart: "סל קניות",
+          navLogin: "התחברות",
+          productsTitle: "המוצרים שלנו",
+          sizeLabel: "בחר מידה:",
+          cartTitle: "סל הקניות שלך",
+          checkoutButton: "בצע תשלום",
+          couponPlaceholder: "הכנס קוד קופון",
+          couponButton: "החל קופון",
+          loginTitle: "התחברות למערכת",
+          loginEmailPlaceholder: "הכנס אימייל",
+          loginPasswordPlaceholder: "הכנס סיסמה",
+          loginButton: "התחבר",
+          historyTitle: "היסטוריות רכישות",
+          historyBackButton: "חזור לחנות",
+          creditCardPlaceholder: "הכנס מספר כרטיס אשראי",
+          checkoutPopupTitle: "אתה בטוח שאתה רוצה לקנות?",
+          addToCart: "הוסף לעגלה",
+          // Product translations
+          product1Name: "חולצת Wolves",
+          product2Name: "מכנסיים שחורים",
+          product3Name: "מעיל",
+          product4Name: "סווצ'ר",
+          product5Name: "כובע",
+          popupAddMessage: "האם אתה בטוח שברצונך להוסיף את",
+          // Logout translations
+          logoutPopupTitle: "אתה בטוח שאתה רוצה להתנתק?",
+          logoutConfirm: "אני בטוח",
+          logoutCancel: "אני רוצה להשאר מחובר",
+          logoutButton: "התנתקות"
+        },
+        en: {
+          headerWelcome: "Welcome to WOLVES",
+          headerSub: "A modern online shopping experience",
+          navHome: "Home",
+          navCart: "Cart",
+          navLogin: "Login",
+          productsTitle: "Our Products",
+          sizeLabel: "Select size:",
+          cartTitle: "Your Cart",
+          checkoutButton: "Checkout",
+          couponPlaceholder: "Enter coupon code",
+          couponButton: "Apply Coupon",
+          loginTitle: "Login",
+          loginEmailPlaceholder: "Enter email",
+          loginPasswordPlaceholder: "Enter password",
+          loginButton: "Login",
+          historyTitle: "Purchase History",
+          historyBackButton: "Back to Shop",
+          creditCardPlaceholder: "Enter credit card number",
+          checkoutPopupTitle: "Are you sure you want to purchase?",
+          addToCart: "Add to Cart",
+          // Product translations updated to English:
+          product1Name: "Wolves T-Shirt",
+          product2Name: "Black Pants",
+          product3Name: "Jacket",
+          product4Name: "Sweatshirt",
+          product5Name: "Cap",
+          popupAddMessage: "Are you sure you want to add",
+          // Logout translations
+          logoutPopupTitle: "Are you sure you want to log out?",
+          logoutConfirm: "I am sure",
+          logoutCancel: "I want to stay logged in",
+          logoutButton: "Logout"
+        }
+      };
+
+      // Update texts based on the selected language
+      function updateLanguageTexts(lang) {
+        // Header texts
+        document.getElementById("header-welcome").textContent = translations[lang].headerWelcome;
+        document.getElementById("header-sub").textContent = translations[lang].headerSub;
+        // Navigation texts
+        document.getElementById("nav-home").innerHTML = `<i class="fas fa-home"></i> ${translations[lang].navHome}`;
+        document.getElementById("nav-cart").innerHTML = `<i class="fas fa-shopping-cart"></i> ${translations[lang].navCart}`;
+        document.getElementById("nav-login").innerHTML = `<i class="fas fa-user"></i> ${translations[lang].navLogin}`;
+        // Section titles
+        document.getElementById("products-title").textContent = translations[lang].productsTitle;
+        document.getElementById("cart-title").textContent = translations[lang].cartTitle;
+        document.getElementById("login-title").textContent = translations[lang].loginTitle;
+        document.getElementById("history-title").textContent = translations[lang].historyTitle;
+        // Buttons and placeholders in cart section
+        document.getElementById("checkout-button").innerHTML = `${translations[lang].checkoutButton} <i class="fas fa-credit-card"></i>`;
+        document.getElementById("coupon-code").placeholder = translations[lang].couponPlaceholder;
+        document.getElementById("coupon-button").textContent = translations[lang].couponButton;
+        document.getElementById("card-number").placeholder = translations[lang].creditCardPlaceholder;
+        document.getElementById("checkout-popup-title").textContent = translations[lang].checkoutPopupTitle;
+        // Login page placeholders and button
+        document.getElementById("login-email").placeholder = translations[lang].loginEmailPlaceholder;
+        document.getElementById("login-password").placeholder = translations[lang].loginPasswordPlaceholder;
+        document.getElementById("login-button").textContent = translations[lang].loginButton;
+        // History back button
+        document.getElementById("history-back-button").textContent = translations[lang].historyBackButton;
+        // Update product names and size labels
+        document.getElementById("product1-name").textContent = translations[lang].product1Name;
+        document.getElementById("product2-name").textContent = translations[lang].product2Name;
+        document.getElementById("product3-name").textContent = translations[lang].product3Name;
+        document.getElementById("product4-name").textContent = translations[lang].product4Name;
+        document.getElementById("product5-name").textContent = translations[lang].product5Name;
+        document.getElementById("size-label-1").textContent = translations[lang].sizeLabel;
+        document.getElementById("size-label-2").textContent = translations[lang].sizeLabel;
+        document.getElementById("size-label-3").textContent = translations[lang].sizeLabel;
+        document.getElementById("size-label-4").textContent = translations[lang].sizeLabel;
+        document.getElementById("size-label-5").textContent = translations[lang].sizeLabel;
+        // Update popup confirmation message for adding to cart
+        document.getElementById("popup-add-msg").innerHTML = `${translations[lang].popupAddMessage} <span id="popup-item"></span> ${(lang === "en") ? "to your cart?" : "לעגלה?"}`;
+        // Update all add-to-cart buttons text
+        document.querySelectorAll(".product button").forEach((btn) => {
+          const icon = btn.innerHTML.match(/<i.*?<\/i>/);
+          btn.textContent = translations[lang].addToCart;
+          if (icon) {
+            btn.innerHTML += " " + icon[0];
+          }
+        });
+        // Update logout popup texts
+        document.getElementById("logout-popup-title").textContent = translations[lang].logoutPopupTitle;
+        document.getElementById("confirm-logout").textContent = translations[lang].logoutConfirm;
+        document.getElementById("cancel-logout").textContent = translations[lang].logoutCancel;
+        // Update header logout button text if it exists
+        const logoutButton = document.getElementById("logout-button");
+        if (logoutButton) {
+          logoutButton.textContent = translations[lang].logoutButton;
+        }
+      }
+
+      // Handle language change events
+      function handleLanguageChange(event) {
+        const selectedLang = event.target.value;
+        updateLanguageTexts(selectedLang);
+        document.documentElement.lang = selectedLang;
+      }
+
+      document.getElementById("language-selector").addEventListener("change", handleLanguageChange);
+
+      // --- Existing Code for Cart, Login, and Purchase History ---
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const exchangeRates = { USD: 1, EUR: 0.92, ILS: 3.65 };
+      const coupons = {
+        SALE10: 0.1,
+        SALE20: 0.2,
+        SALE30: 0.3,
+        DANWOLF: "flat",
+        FREEBUY: "free"
+      };
+      let couponDiscount = 0;
+      let couponFlat = 0;
+      let appliedCoupon = "";
+
+      function applyCoupon() {
+        const couponInput = document.getElementById("coupon-code").value.trim().toUpperCase();
+        if (couponInput in coupons) {
+          appliedCoupon = couponInput;
+          if (couponInput === "DANWOLF") {
+            couponDiscount = 0;
+            couponFlat = 50;
+            alert(`קופון ${couponInput} הופעל! הנחה של $50`);
+            document.getElementById("card-number").style.display = "block";
+          } else if (couponInput === "FREEBUY") {
+            couponDiscount = 0;
+            couponFlat = 0;
+            alert(`קופון ${couponInput} הופעל! ניתן לבצע רכישה ללא צורך בכרטיס אשראי.`);
+            document.getElementById("card-number").style.display = "none";
+          } else {
+            couponDiscount = coupons[couponInput];
+            couponFlat = 0;
+            alert(`קופון ${couponInput} הופעל! הנחה של ${couponDiscount * 100}%`);
+            document.getElementById("card-number").style.display = "block";
+          }
+          updateCartPage();
+        } else {
+          couponDiscount = 0;
+          couponFlat = 0;
+          appliedCoupon = "";
+          alert("קופון לא חוקי. אנא נסה שוב.");
+          document.getElementById("card-number").style.display = "block";
+          updateCartPage();
+        }
+      }
+
+      function updatePrices() {
+        const currency = document.getElementById("currency").value;
+        localStorage.setItem("selectedCurrency", currency);
+        document.querySelectorAll(".price").forEach((priceElement) => {
+          const basePrice = priceElement.getAttribute("data-price");
+          if (basePrice) {
+            const convertedPrice = (basePrice * exchangeRates[currency]).toFixed(2);
+            const symbol = currency === "USD" ? "$" : currency === "EUR" ? "€" : "₪";
+            priceElement.textContent = `${symbol}${convertedPrice}`;
+          }
+        });
+        updateCartPage();
+      }
+
+      function addToCart(item, price) {
+        const popup = document.getElementById("popup");
+        popup.style.display = "flex";
+        document.getElementById("popup-item").textContent = item;
+        document.getElementById("confirm-add").onclick = () => {
+          cart.push({ item, price });
+          localStorage.setItem("cart", JSON.stringify(cart));
+          popup.style.display = "none";
+          updateCartPage();
+        };
+        document.getElementById("cancel-add").onclick = () => {
+          popup.style.display = "none";
+        };
+      }
+
+      function removeFromCart(index) {
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartPage();
+      }
+
+      function updateCartPage() {
+        const cartList = document.getElementById("cart-list");
+        if (!cartList) return;
+        cartList.innerHTML = "";
+        let totalUSD = 0;
+        const currency = document.getElementById("currency") ? document.getElementById("currency").value : "USD";
+        cart.forEach(({ item, price }, index) => {
+          const li = document.createElement("li");
+          const convertedPrice = (price * exchangeRates[currency]).toFixed(2);
+          const symbol = currency === "USD" ? "$" : currency === "EUR" ? "€" : "₪";
+          li.innerHTML = `${item} - ${symbol}${convertedPrice}`;
+          const removeButton = document.createElement("button");
+          removeButton.innerHTML = `הסר <i class="fas fa-trash-alt"></i>`;
+          removeButton.onclick = () => removeFromCart(index);
+          li.appendChild(removeButton);
+          cartList.appendChild(li);
+          totalUSD += price;
+        });
+        let totalConverted = (totalUSD * exchangeRates[currency]).toFixed(2);
+        const symbol = currency === "USD" ? "$" : currency === "EUR" ? "€" : "₪";
+        let discountText = "";
+        if (appliedCoupon) {
+          if (appliedCoupon === "DANWOLF") {
+            const flatDiscountConverted = (50 * exchangeRates[currency]).toFixed(2);
+            totalConverted = (totalConverted - flatDiscountConverted).toFixed(2);
+            discountText = `הנחה (${appliedCoupon}): -${symbol}${flatDiscountConverted}`;
+          } else if (couponDiscount > 0) {
+            const discountAmount = (totalConverted * couponDiscount).toFixed(2);
+            totalConverted = (totalConverted - discountAmount).toFixed(2);
+            discountText = `הנחה (${appliedCoupon}): -${symbol}${discountAmount}`;
+          }
+          document.getElementById("discount-text").textContent = discountText;
+        } else {
+          document.getElementById("discount-text").textContent = "";
+        }
+        document.getElementById("total-price").textContent = `סה"כ: ${symbol}${totalConverted}`;
+      }
+
+      function validateCreditCard(cardNumber) {
+        cardNumber = cardNumber.replace(/\D/g, "");
+        let sum = 0, alternate = false;
+        for (let i = cardNumber.length - 1; i >= 0; i--) {
+          let num = parseInt(cardNumber[i], 10);
+          if (alternate) {
+            num *= 2;
+            if (num > 9) num -= 9;
+          }
+          sum += num;
+          alternate = !alternate;
+        }
+        return sum % 10 === 0;
+      }
+
+      function isValidRealCard(cardNumber) {
+        const validCards = [
+          "4242424242424242",
+          "5555555555554444",
+          "378282246310005",
+          "6011111111111117"
+        ];
+        return validCards.includes(cardNumber);
+      }
+
+      function sendPurchaseEmail(email, purchaseDetails) {
+        const templateParams = {
+          to_email: email,
+          subject: "סיכום רכישה מחנות WOLVES",
+          message: purchaseDetails,
+        };
+        console.log("מנסים לשלוח אימייל עם הפרמטרים:", templateParams);
+        emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
+          .then(
+            function (response) {
+              console.log("האימייל נשלח בהצלחה!", response.status, response.text);
+            },
+            function (error) {
+              console.error("נכשל בשליחת האימייל", error);
+            }
+          );
+      }
+
+      function completeCheckout() {
+        const currency = document.getElementById("currency").value;
+        let totalUSD = 0;
+        cart.forEach(({ price }) => {
+          totalUSD += price;
+        });
+        let totalConverted = totalUSD * exchangeRates[currency];
+        if (appliedCoupon === "DANWOLF") {
+          totalConverted -= 50 * exchangeRates[currency];
+        } else if (couponDiscount > 0) {
+          totalConverted -= totalConverted * couponDiscount;
+        }
+        totalConverted = totalConverted.toFixed(2);
+        let purchaseDetails = "פרטי הרכישה:\n";
+        cart.forEach(({ item, price }) => {
+          purchaseDetails += `${item}: $${price}\n`;
+        });
+        purchaseDetails += `סה"כ לתשלום: ${currency === "USD" ? "$" : currency === "EUR" ? "€" : "₪"}${totalConverted}\n`;
+        
+        if (localStorage.getItem("loggedin") === "true") {
+          const email = localStorage.getItem("email");
+          sendPurchaseEmail(email, purchaseDetails);
+        }
+        
+        let purchaseHistory = JSON.parse(localStorage.getItem("purchaseHistory")) || [];
+        purchaseHistory.push(purchaseDetails);
+        localStorage.setItem("purchaseHistory", JSON.stringify(purchaseHistory));
+        
+        alert("התשלום בוצע בהצלחה! תודה על הרכישה.");
+        cart = [];
+        localStorage.setItem("cart", JSON.stringify(cart));
+        couponDiscount = 0;
+        couponFlat = 0;
+        appliedCoupon = "";
+        document.getElementById("card-number").style.display = "block";
+        updateCartPage();
+        document.getElementById("checkout-popup").style.display = "none";
+      }
+
+      function checkout() {
+        if (appliedCoupon !== "FREEBUY") {
+          const cardNumber = document.getElementById("card-number").value.trim();
+          if (!cardNumber) {
+            alert("אנא הכנס מספר כרטיס אשראי.");
+            return;
+          }
+          if (!validateCreditCard(cardNumber)) {
+            alert("מספר כרטיס אשראי לא תקף. אנא נסה שנית.");
+            return;
+          }
+          if (!isValidRealCard(cardNumber)) {
+            alert("כרטיס האשראי שהוזן אינו מזוהה ככרטיס אמיתי. אנא נסה מספר אחר.");
+            return;
+          }
+        }
+        const checkoutPopup = document.getElementById("checkout-popup");
+        checkoutPopup.style.display = "flex";
+        document.getElementById("cancel-checkout").onclick = () => {
+          checkoutPopup.style.display = "none";
+        };
+        document.getElementById("confirm-checkout").onclick = completeCheckout;
+      }
+
+      function showSection(sectionId) {
+        const sections = document.querySelectorAll("main > section");
+        sections.forEach((section) => {
+          section.style.display = "none";
+        });
+        document.getElementById(sectionId).style.display = "block";
+        if (sectionId === "cart-section") {
+          updateCartPage();
+        }
+      }
+
+      function updateHistoryPage() {
+        const historyContent = document.getElementById("history-content");
+        const purchaseHistory = JSON.parse(localStorage.getItem("purchaseHistory")) || [];
+        historyContent.innerHTML = "";
+        if (purchaseHistory.length === 0) {
+          historyContent.innerHTML = `<div class="no-history">עדיין לא עשית רכישות</div>`;
+        } else {
+          purchaseHistory.forEach((purchase, index) => {
+            historyContent.innerHTML += `<div class="purchase">
+  <h4>רכישה ${index + 1}</h4>
+  <pre>${purchase}</pre>
+</div>`;
+          });
+        }
+      }
+
+      function loginUser(e) {
+        e.preventDefault();
+        const email = document.getElementById("login-email").value.trim();
+        const password = document.getElementById("login-password").value.trim();
+        const errorDiv = document.getElementById("login-error");
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          errorDiv.textContent = "כתובת אימייל לא תקינה.";
+          return;
+        }
+        if (password.length < 6) {
+          errorDiv.textContent = "הסיסמה חייבת להכיל לפחות 6 תווים.";
+          return;
+        }
+        errorDiv.textContent = "";
+        localStorage.setItem("loggedin", "true");
+        localStorage.setItem("email", email);
+        // Update UI to show logout information and button (using the logoutButton translation)
+        document.getElementById("login-info").innerHTML = `<i class="fas fa-user"></i> ${email} <button id="logout-button" onclick="logoutUser()">${translations.he.logoutButton}</button>`;
+        document.getElementById("nav-login").style.display = "none";
+        showSection("products-section");
+      }
+
+      // Function to show logout confirmation popup
+      function logoutUser() {
+        const logoutPopup = document.getElementById("logout-popup");
+        logoutPopup.style.display = "flex";
+        document.getElementById("confirm-logout").onclick = function() {
+          localStorage.removeItem("loggedin");
+          localStorage.removeItem("email");
+          location.reload();
+        }
+        document.getElementById("cancel-logout").onclick = function() {
+          logoutPopup.style.display = "none";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedCurrency = localStorage.getItem("selectedCurrency") || "USD";
+        const currencySelect = document.getElementById("currency");
+        if (currencySelect) {
+          currencySelect.value = savedCurrency;
+        }
+        updatePrices();
+        showSection("products-section");
+        const loginInfo = document.getElementById("login-info");
+        if (localStorage.getItem("loggedin") === "true") {
+          const email = localStorage.getItem("email");
+          loginInfo.innerHTML = `<i class="fas fa-user"></i> ${email} <button id="logout-button" onclick="logoutUser()">${translations.he.logoutButton}</button>`;
+          document.getElementById("nav-login").style.display = "none";
+        } else {
+          loginInfo.innerHTML = "";
+        }
+      });
+    </script>
+  </body>
+</html>
